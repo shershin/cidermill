@@ -1,0 +1,102 @@
+package cidermillfriends;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JToolBar;
+
+import java.sql.*;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Cidermillfriends extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField txtCiderMillFriends;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) 
+			throws SQLException, ClassNotFoundException{
+		//set up an odbc admin on access
+		//Connection connection = DriverMangager.getConnection('jdbc:odbc:')
+		//driver = sun.jdbc.odbc.JdbcOdbcDriver
+		//incase i need to load the driver
+		//try{
+			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+		//}catch(Exception e){
+			//e.fillInStackTrace();
+		//}
+		System.out.println("Driver Loaded");
+		
+		//url = jdbc:odbc:cidermillfriends
+		Connection connection = DriverManager.getConnection
+				("jdbc:ucanaccess://C:/Users/michael/Google Drive/cidermillfriends/cidermillfriends.accdb");
+		System.out.println("Database Loaded");
+		
+		//testing a simple query
+		ResultSet rs = null;
+		Statement test = null;
+		test = connection.createStatement();
+		
+		String query = "SELECT ID FROM people";
+		
+		rs = test.executeQuery(query);
+		
+		while(rs.next()){
+			int theID = rs.getInt("ID");
+			System.out.println(theID);
+		}
+		
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Cidermillfriends frame = new Cidermillfriends();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		//close it down
+		connection.close();
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Cidermillfriends() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		txtCiderMillFriends = new JTextField();
+		txtCiderMillFriends.setText("Cider Mill Friends");
+		contentPane.add(txtCiderMillFriends, BorderLayout.NORTH);
+		txtCiderMillFriends.setColumns(10);
+		
+		JButton btnAddPerson = new JButton("Add person");
+		contentPane.add(btnAddPerson, BorderLayout.WEST);
+		
+		JButton btnAddVolenteer = new JButton("Add Volenteer");
+		btnAddVolenteer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		contentPane.add(btnAddVolenteer, BorderLayout.CENTER);
+		
+		JButton btnAddEvent = new JButton("Add Event ");
+		contentPane.add(btnAddEvent, BorderLayout.EAST);
+	}
+
+}
