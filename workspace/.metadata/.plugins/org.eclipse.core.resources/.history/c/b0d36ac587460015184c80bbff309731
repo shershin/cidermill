@@ -1,0 +1,139 @@
+package cidermillfriends;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JToolBar;
+
+import java.sql.*;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.Component;
+import javax.swing.JTabbedPane;
+import javax.swing.JLayeredPane;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+
+public class Cidermillfriends extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) 
+			throws SQLException, ClassNotFoundException{
+		//set up an odbc admin on access
+		//Connection connection = DriverMangager.getConnection('jdbc:odbc:')
+		//driver = sun.jdbc.odbc.JdbcOdbcDriver
+		//incase i need to load the driver
+		//try{
+			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+		//}catch(Exception e){
+			//e.fillInStackTrace();
+		//}
+		System.out.println("Driver Loaded");
+		
+		//url = jdbc:odbc:cidermillfriends
+		Connection connection = DriverManager.getConnection 
+				//("jdbc:ucanaccess:/src/cidermillfriends.accdb");
+				("jdbc:ucanaccess://C:/Users/michael/Google Drive/cidermillfriends/cidermillfriends.accdb");
+		System.out.println("Database Loaded");
+		
+		//testing a simple query
+		ResultSet rs1 = null;
+		Statement test = null;
+		test = connection.createStatement();
+		
+		String peopleQuery = "SELECT ID FROM people";
+		String donationsQuery = "SELECT ID FROM donations";
+		String volenQuery = "SELECT ID FROM volentiers";
+		String eventQuery = "SELECT ID FROM events";
+		
+		rs1 = test.executeQuery(peopleQuery);
+		/*/
+		rs2 = test.executeQuery(donationsQuery);
+		rs3 = test.executeQuery(volenQuery);
+		rs4 = test.executeQuery(eventQuery);
+		/*/
+		while(rs1.next()){
+			int theID = rs1.getInt("ID");
+			System.out.println(theID);
+		}
+		
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Cidermillfriends frame = new Cidermillfriends();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		//close it down
+		connection.close();
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Cidermillfriends() {
+		setFont(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new GridLayout(0, 3, 0, 0));
+		setTitle("Cider Mill Friends");
+		
+		JButton btnAddPerson = new JButton("Add person");
+		btnAddPerson.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("button");
+			}
+		});
+		contentPane.add(btnAddPerson);
+		
+		JButton btnAddVolenteer = new JButton("Add Volenteer");	
+		contentPane.add(btnAddVolenteer);
+		
+		JButton btnAddEvent = new JButton("Add Event");
+		contentPane.add(btnAddEvent);
+		
+		JButton btnAddDonation = new JButton("Add Donation");
+		contentPane.add(btnAddDonation);
+		
+		JButton btnLookUpVolenteer = new JButton("Look Up Volenteer");
+		contentPane.add(btnLookUpVolenteer);
+		
+		JButton btnLookUpEvent = new JButton("Look Up Event");
+		contentPane.add(btnLookUpEvent);
+		
+		JButton btnLookUpDonations = new JButton("Look Up Donations");
+		contentPane.add(btnLookUpDonations);
+		
+		JPanel panel = new JPanel();
+		contentPane.add(panel);
+		
+		JButton btnLookUpPeople = new JButton("Look up People");
+		contentPane.add(btnLookUpPeople);
+		
+		
+		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{btnAddPerson, btnAddVolenteer, btnAddEvent, btnLookUpDonations, btnAddDonation, btnLookUpVolenteer}));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, btnAddPerson, btnAddVolenteer, btnAddEvent, btnLookUpDonations, btnAddDonation, btnLookUpVolenteer}));
+		}
+
+}
