@@ -9,6 +9,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JToolBar;
 
 import java.sql.*;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
 
 public class Cidermillfriends extends JFrame {
 
@@ -23,13 +28,32 @@ public class Cidermillfriends extends JFrame {
 		//Connection connection = DriverMangager.getConnection('jdbc:odbc:')
 		//driver = sun.jdbc.odbc.JdbcOdbcDriver
 		//incase i need to load the driver
-		Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+		//try{
+			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+		//}catch(Exception e){
+			//e.fillInStackTrace();
+		//}
 		System.out.println("Driver Loaded");
 		
 		//url = jdbc:odbc:cidermillfriends
 		Connection connection = DriverManager.getConnection
-				("jdbc:odbc:cidermillfriends");
+				("jdbc:ucanaccess://C:/Users/michael/Google Drive/cidermillfriends/cidermillfriends.accdb");
 		System.out.println("Database Loaded");
+		
+		//testing a simple query
+		ResultSet rs = null;
+		Statement test = null;
+		test = connection.createStatement();
+		
+		String query = "SELECT ID FROM people";
+		
+		rs = test.executeQuery(query);
+		
+		while(rs.next()){
+			int theID = rs.getInt("ID");
+			System.out.println(theID);
+		}
+		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -55,6 +79,23 @@ public class Cidermillfriends extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		JButton btnAddPerson = new JButton("Add person");
+		contentPane.add(btnAddPerson, BorderLayout.WEST);
+		
+		JButton btnAddVolenteer = new JButton("Add Volenteer");
+		btnAddVolenteer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		contentPane.add(btnAddVolenteer, BorderLayout.CENTER);
+		
+		JButton btnAddEvent = new JButton("Add Event ");
+		contentPane.add(btnAddEvent, BorderLayout.EAST);
+		
+		JTextPane txtpnCiderMillFriends = new JTextPane();
+		txtpnCiderMillFriends.setText("Cider Mill Friends");
+		contentPane.add(txtpnCiderMillFriends, BorderLayout.NORTH);
 	}
 
 }

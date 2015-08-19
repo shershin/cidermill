@@ -16,13 +16,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
-import javax.swing.JTabbedPane;
-import javax.swing.JLayeredPane;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
 
 public class Cidermillfriends extends JFrame {
 
@@ -89,7 +82,6 @@ public class Cidermillfriends extends JFrame {
 	 * Create the frame.
 	 */
 	public Cidermillfriends() {
-		setFont(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -101,7 +93,11 @@ public class Cidermillfriends extends JFrame {
 		JButton btnAddPerson = new JButton("Add person");
 		contentPane.add(btnAddPerson);
 		
-		JButton btnAddVolenteer = new JButton("Add Volenteer");	
+		JButton btnAddVolenteer = new JButton("Add Volenteer");
+		btnAddVolenteer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		contentPane.add(btnAddVolenteer);
 		
 		JButton btnAddEvent = new JButton("Add Event ");
@@ -110,13 +106,11 @@ public class Cidermillfriends extends JFrame {
 		JButton btnLookUpRecords = new JButton("Look Up Records");
 		contentPane.add(btnLookUpRecords);
 		
+		JLabel label = new JLabel("");
+		contentPane.add(label);
+		
 		JButton btnAddDonation = new JButton("Add Donation");
 		contentPane.add(btnAddDonation);
-		
-		JButton btnCurseOutSomeone = new JButton("Curse Out Someone");
-		contentPane.add(btnCurseOutSomeone);
-		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{btnAddPerson, btnAddVolenteer, btnAddEvent, btnLookUpRecords, btnAddDonation, btnCurseOutSomeone}));
-		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, btnAddPerson, btnAddVolenteer, btnAddEvent, btnLookUpRecords, btnAddDonation, btnCurseOutSomeone}));
 		}
 
 }

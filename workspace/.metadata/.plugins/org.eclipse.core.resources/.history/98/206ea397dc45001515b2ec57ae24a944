@@ -9,6 +9,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JToolBar;
 
 import java.sql.*;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
 
 public class Cidermillfriends extends JFrame {
 
@@ -36,16 +43,23 @@ public class Cidermillfriends extends JFrame {
 		System.out.println("Database Loaded");
 		
 		//testing a simple query
-		ResultSet rs = null;
+		ResultSet rs1 = null;
 		Statement test = null;
 		test = connection.createStatement();
 		
-		String query = "SELECT ID FROM people";
+		String peopleQuery = "SELECT ID FROM people";
+		String donationsQuery = "SELECT ID FROM donations";
+		String volenQuery = "SELECT ID FROM volentiers";
+		String eventQuery = "SELECT ID FROM events";
 		
-		rs = test.executeQuery(query);
-		
-		while(rs.next()){
-			int theID = rs.getInt("ID");
+		rs1 = test.executeQuery(peopleQuery);
+		/*/
+		rs2 = test.executeQuery(donationsQuery);
+		rs3 = test.executeQuery(volenQuery);
+		rs4 = test.executeQuery(eventQuery);
+		/*/
+		while(rs1.next()){
+			int theID = rs1.getInt("ID");
 			System.out.println(theID);
 		}
 		
@@ -72,8 +86,32 @@ public class Cidermillfriends extends JFrame {
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-	}
+		contentPane.setLayout(new GridLayout(0, 3, 0, 0));
+		setTitle("Cider Mill Friends");
+		
+		JTextPane txtpnCiderMillFriends = new JTextPane();
+		txtpnCiderMillFriends.setText("Cider Mill Friends");
+		contentPane.add(txtpnCiderMillFriends);
+		
+		JLabel label = new JLabel("");
+		contentPane.add(label);
+		
+		JLabel label_1 = new JLabel("");
+		contentPane.add(label_1);
+		
+		JButton btnAddPerson = new JButton("Add person");
+		contentPane.add(btnAddPerson);
+		
+		JButton btnAddVolenteer = new JButton("Add Volenteer");
+		btnAddVolenteer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		contentPane.add(btnAddVolenteer);
+		
+		JButton btnAddEvent = new JButton("Add Event ");
+		contentPane.add(btnAddEvent);
+		}
 
 }
