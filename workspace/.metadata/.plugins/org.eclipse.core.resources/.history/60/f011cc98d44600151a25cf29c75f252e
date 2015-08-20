@@ -27,8 +27,6 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.JFormattedTextField;
-import javax.swing.BoxLayout;
 
 public class Cidermillfriends extends JFrame {
 	public static int peopleRecords;
@@ -115,27 +113,23 @@ public class Cidermillfriends extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setTitle("Cider Mill Friends");
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{434, 0};
+		gridBagLayout.rowHeights = new int[]{261, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		getContentPane().setLayout(gridBagLayout);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		getContentPane().add(tabbedPane);
+		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
+		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
+		gbc_tabbedPane.gridx = 0;
+		gbc_tabbedPane.gridy = 0;
+		getContentPane().add(tabbedPane, gbc_tabbedPane);
 		
 		JTextPane txtpnThings = new JTextPane();
-		txtpnThings.setText("Current Reocrds \n People: " + peopleRecords 
-				+ "\n Volenteers: " + volenteerRecords 
-				+ "\n Donations: " + donationRecords 
-				+ "\n Events: " + eventRecords);
+		txtpnThings.setText("Current Reocrds \n People: " + peopleRecords + "\n Volenteers: " + volenteerRecords + "\n Donations: " + donationRecords + "\n Events: " + eventRecords);
 		tabbedPane.addTab("Home", null, txtpnThings, null);
-		
-		JFormattedTextField frmtdtxtfldFirstName = new JFormattedTextField();
-		frmtdtxtfldFirstName.setText("First name");
-		tabbedPane.addTab("Add Person", null, frmtdtxtfldFirstName, null);
-		
-		JButton btnLookUpPeople = new JButton("Look Up People");
-		tabbedPane.addTab("Look up People", null, btnLookUpPeople, null);
-		
-		JButton btnLookUpVolenteers = new JButton("Look Up Volenteers");
-		tabbedPane.addTab("Look up Volenteers", null, btnLookUpVolenteers, null);
 		getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tabbedPane}));
 		}
 }

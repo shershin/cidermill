@@ -24,17 +24,14 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JFormattedTextField;
-import javax.swing.BoxLayout;
 
 public class Cidermillfriends extends JFrame {
 	public static int peopleRecords;
 	public static int donationRecords;
 	public static int eventRecords;
 	public static int volenteerRecords;
+
+	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
@@ -54,8 +51,9 @@ public class Cidermillfriends extends JFrame {
 		
 		//url = jdbc:odbc:cidermillfriends
 		Connection connection = DriverManager.getConnection 
-				("jdbc:ucanaccess://src/cidermillfriends/cidermillfriends.accdb");
-				
+				("jdbc:ucanaccess:/cidermillfriends/cidermillfriends.accdb");
+				//("jdbc:ucanaccess://C:/Users/michael/Documents/GitHub/cidermill/workspace/cidermillfriends/src/cidermillfriends/cidermillfriends.accdb");
+				//("jdbc:ucanaccess://C:/Users/michael/Google Drive/cidermillfriends/cidermillfriends.accdb");
 		System.out.println("Database Loaded");
 		
 		//testing a simple query
@@ -114,28 +112,46 @@ public class Cidermillfriends extends JFrame {
 		setFont(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new GridLayout(0, 3, 0, 0));
 		setTitle("Cider Mill Friends");
-		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		getContentPane().add(tabbedPane);
+		JButton btnAddPerson = new JButton("Add Person " + peopleRecords);
+		btnAddPerson.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		contentPane.add(btnAddPerson);
 		
-		JTextPane txtpnThings = new JTextPane();
-		txtpnThings.setText("Current Reocrds \n People: " + peopleRecords 
-				+ "\n Volenteers: " + volenteerRecords 
-				+ "\n Donations: " + donationRecords 
-				+ "\n Events: " + eventRecords);
-		tabbedPane.addTab("Home", null, txtpnThings, null);
+		JButton btnAddVolenteer = new JButton("Add Volenteer " + volenteerRecords);	
+		contentPane.add(btnAddVolenteer);
 		
-		JFormattedTextField frmtdtxtfldFirstName = new JFormattedTextField();
-		frmtdtxtfldFirstName.setText("First name");
-		tabbedPane.addTab("Add Person", null, frmtdtxtfldFirstName, null);
+		JButton btnAddEvent = new JButton("Add Event " + eventRecords);
+		contentPane.add(btnAddEvent);
 		
-		JButton btnLookUpPeople = new JButton("Look Up People");
-		tabbedPane.addTab("Look up People", null, btnLookUpPeople, null);
+		JButton btnAddDonation = new JButton("Add Donation " + donationRecords);
+		contentPane.add(btnAddDonation);
 		
-		JButton btnLookUpVolenteers = new JButton("Look Up Volenteers");
-		tabbedPane.addTab("Look up Volenteers", null, btnLookUpVolenteers, null);
-		getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{tabbedPane}));
+		JPanel panel = new JPanel();
+		contentPane.add(panel);
+		
+		JButton btnLookUpPeople = new JButton("Look up People");
+		contentPane.add(btnLookUpPeople);
+		
+		JButton btnLookUpVolenteer = new JButton("Look Up Volenteer");
+		contentPane.add(btnLookUpVolenteer);
+		
+		JButton btnLookUpEvent = new JButton("Look Up Event");
+		contentPane.add(btnLookUpEvent);
+		
+		JButton btnLookUpDonations = new JButton("Look Up Donations");
+		contentPane.add(btnLookUpDonations);
+		
+		
+		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{btnAddPerson, btnAddVolenteer, btnAddEvent, btnLookUpDonations, btnAddDonation, btnLookUpVolenteer}));
+		setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{contentPane, btnAddPerson, btnAddVolenteer, btnAddEvent, btnLookUpDonations, btnAddDonation, btnLookUpVolenteer}));
 		}
+
 }
